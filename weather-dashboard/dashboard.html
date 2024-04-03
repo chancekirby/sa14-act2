@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+    </head>
+
+    <body>
+        <h1>Weather Dashboard</h1>
+
+        <form onsubmit="return false;">
+            <label for="city">Enter the name of the city you want to see the weather for:</label>
+            <input type="text" id="city" name="city">
+            <input type="submit">
+        </form>
+
+        <div id="data"></div>
+
+        <script>
+            const form = document.getElementsByTagName("form")
+            form[0].addEventListener("submit", async function fetchWeatherData(event){
+                try {
+                    const input = document.getElementById("city")
+                    const data = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=c91a9f71913f43c4a3034533242703&q=${input.value}&days=6&aqi=no&alerts=no`).then((response) => response.json())
+                    const dataDiv = document.getElementById("data")
+                    dataDiv.innerHTML = ""
+
+
+                    //Display the current weather
+                    const pCurrentData = document.createElement("p")
+                    pCurrentData.innerText = `Current conditions for ${input.value} at ${data.location.localtime}:\n${data.current.temp_f}F\n${data.current.humidity}% Humidity`
+                    dataDiv.insertAdjacentElement("beforeend", pCurrentData)
+
+                    //Display current weather icon
+                    const imgCurrentIcon = document.createElement("img")
+                    imgCurrentIcon.src = "https:" + data.current.condition.icon
+                    dataDiv.insertAdjacentElement("beforeend", imgCurrentIcon)
+
+                    //Display the forecast for the next five days
+                    data.forecast.forecastday.slice(1).forEach(element => {
+                        const pForecastData = document.createElement("p")
+                        pForecastData.innerText = `${element.date}\nHigh: ${element.day.maxtemp_f}F | Low: ${element.day.mintemp_f}F`
+                        dataDiv.insertAdjacentElement("beforeend", pForecastData)
+
+                        const imgIcon = document.createElement("img")
+                        imgIcon.src = "https:" + element.day.condition.icon
+                        dataDiv.insertAdjacentElement("beforeend", imgIcon)
+                    })
+                
+
+                } catch (error) {
+                    console.log("Error fetching data: ", error)
+                }
+            })
+        </script>
+    </body>
+
+
+</html>
