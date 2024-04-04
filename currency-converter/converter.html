@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Currency Converter</title>
+    </head>
+
+    <body>
+        <h1>Currency Converter</h1>
+
+        <form onsubmit="return false;">
+            <!--Dropdown for first curreny-->
+            <select id="currency1">
+                <option value="USD">USD</option>
+                <option value="VND">VND</option>
+                <option value="JPY">JPY</option>
+            </select>
+
+            <!--Dropdown for second currency-->
+            <select id="currency2">
+                <option value="USD">USD</option>
+                <option value="VND">VND</option>
+                <option value="JPY">JPY</option>
+            </select>
+
+            <!--Input field for amount to convert-->
+            <input type="number" id="amount" min="0">
+
+            <!--Convert button-->
+            <input type="submit" value="Convert">
+        </form>
+
+        <div id="conversion"></div>
+
+        <script>
+            const form = document.getElementsByTagName("form")
+            form[0].addEventListener("submit", async function fetchConversions() {
+                try{
+                    const currency1 = document.getElementById("currency1")
+                    const currency2 = document.getElementById("currency2")
+                    const amount = document.getElementById("amount")
+                    const conversionDiv = document.getElementById("conversion")
+                    conversionDiv.innerHTML = ""
+
+                    const conversions = await fetch(`https://v6.exchangerate-api.com/v6/ea5dc3e8bb17d33d8c61f148/latest/${currency1.value}`).then((response) => response.json())
+
+                    const pConversion = document.createElement("p")
+                    pConversion.innerText = `${amount.value} ${currency1.value} = ${conversions.conversion_rates[currency2.value] * amount.value} ${currency2.value}`
+                    conversionDiv.insertAdjacentElement("beforeend", pConversion)
+                } catch (error) {
+                    console.log("Error fetching data: ", error)
+                }
+                
+            })
+
+        </script>
+    </body>
+
+
+</html>
