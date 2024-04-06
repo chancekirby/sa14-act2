@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>ToDo</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <h1>ToDo List</h1>
+
+        <form onsubmit="return false;" id="input">
+            <div class="user-input">
+                <label for="title">Title</label>
+                <textarea id="title" rows="3" col="50"></textarea>
+                <label for="details">Details</label>
+                <textarea id="details" rows="3" col="50"></textarea>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="tasks" id="tasks">
+            <div class="task">
+                <h3>Do homework</h3>
+                <p>-Due monday<p>
+                <button type="button">Edit</button>
+                <button type="button">Delete</button>
+            </div>
+        </div>
+        
+
+        <script src="functionality.js"></script>
+    </body>
+
+
+</html>
