@@ -11,9 +11,11 @@ form.addEventListener("submit", () => {
     
     const taskTitle =  document.createElement("h3")
     taskTitle.innerText = `${inputTitle.value}`
+    inputTitle.value = ''
 
     const taskDetails = document.createElement("p")
     taskDetails.innerText = `${inputDetails.value}`
+    inputDetails.value = ''
 
     const editButton = document.createElement("button")
     editButton.innerText = "Edit"
@@ -30,6 +32,8 @@ form.addEventListener("submit", () => {
     for (i in elements) {
         task.appendChild(elements[i])
     }
+
+
 
     editButton.addEventListener("click", () => {
         taskTitle.setAttribute("contenteditable", true)
